@@ -62,7 +62,7 @@ def generateASXMLFiles(directory, startPath):
         else:
             fileName = item.rsplit('.')
             
-            if fileName[len(fileName) - 1] != "xml":
+            if fileName[len(fileName) - 1] == "xml":
                 #Image: Build the AS file.
                 createASXMLFile(directory, startPath, fileName)
 

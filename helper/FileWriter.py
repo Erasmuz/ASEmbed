@@ -42,9 +42,30 @@ def createASXMLFile(directory, startPath, fileName):
     
     
 def buildLinkerASFile(directory, startDirectory):
-    linkerFile = directory + "/" + directory.split('/')[len(directory.split('/'))-1] + ".as"
+    linkerFile = open((directory + "/" + directory.split('/')[len(directory.split('/'))-1] + ".as"), 'w')
     
+    linkerFile.write("package {\n")
+    
+    addASFiles(directory, linkerFile)
     print linkerFile
     
     
+def addASFiles(directory, linkerFile)
+    dirList = os.listdir(directory)
     
+    #Check each item in the current directory.
+    for item in dirList:
+        currentPath = (directory + "/" + item)
+        
+        #Directory: Recurse.
+        if os.path.isdir(currentPath):
+            addASFiles(currentPath, linkerFile)
+            
+        #File: Check if it's an .as file.
+        else:
+            fileName = item.rsplit('.')
+            
+            if fileName[len(fileName) - 1] == "as":
+                print "add file"
+
+
