@@ -5,6 +5,7 @@ sys.path.append('./helper')
 
 from Tkinter import *
 from GUIHelper import *
+from ASBuilder import *
 
 class LevelEditor:
     def __init__(self, master):
@@ -23,19 +24,25 @@ class LevelEditor:
         self.windowFrame.grid(row=0, column = 0)
     
     def buildBitmapData(self):
-        print "test" 
+        directory = tkFileDialog.askdirectory()
+        generateASBitmapFiles(directory, directory)
+        buildLinkerASFile(directory, directory)
         
     def buildSprite(self):
-        print "test"
-        
+        directory = tkFileDialog.askdirectory()
+        generateASSpriteFiles(directory, directory)
+        buildLinkerASFile(directory, directory)
         
     def buildXML(self):
-        print "test"
-   
-   
+        directory = tkFileDialog.askdirectory()
+        generateASXMLFiles(directory)
+        buildLinkerASFile(directory, directory)
+        
+        
+        
 root = Tk()
 root.geometry("%dx%d%+d%+d" % (250, 150, 0, 0))
-app = LevelEditor(root)
 
+app = LevelEditor(root)
 root.mainloop()
 
