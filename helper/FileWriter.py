@@ -22,10 +22,42 @@ public class %s extends BitmapData {\n\
 }\n\
 }" % (fileName[0], fileName[len(fileName)-1], fileName[0], fileName[0])
 
-    outputAS = open(( directory + "/" + fileName[0] + ".as"), 'w')
+    outputAS = open((directory + "/" + fileName[0] + ".as"), 'w')
     outputAS.write(output)
     
     
+def createASSpriteFile(directory, startPath, fileName):
+    output = "package "
+    output += getPackagePath(directory, startPath)
+    
+    output += " {\n\
+import flash.display.DisplayObject;\n\
+	import flash.display.MovieClip;\n\
+\n\
+	final public class %s extends MovieClip\n\
+	{\n\
+\n\
+		[Embed(source=\"%s.%s\")]\n\
+		private const Graphic:Class;\n\
+\n\
+		public function %s():void\n\
+		{\n\
+			super();\n\
+			addCenteredChild(new Graphic());\n\
+		}\n\
+\n\
+		private function addCenteredChild(child:DisplayObject):void\n\
+		{\n\
+			var c:DisplayObject = addChild(child);\n\
+			c.x -= c.width;\n\
+			c.y -= c.height;\n\
+		}\n\
+	}\n\
+}" % (fileName[0], fileName[0], fileName[len(fileName)-1], fileName[0])
+    
+    outputAS = open(( directory + "/" + fileName[0] + ".as"), 'w')
+    outputAS.write(output)
+  
 def getPackagePath(directory, startPath):
     output = ""
     
@@ -40,9 +72,6 @@ def getPackagePath(directory, startPath):
     output += (path[len(path)-1])
     
     return output
-    
-def createASSpriteFile(directory, startPath, fileName):
-    print ""
     
     
 def createASXMLFile(directory, startPath, fileName):

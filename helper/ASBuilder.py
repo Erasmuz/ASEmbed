@@ -7,6 +7,13 @@ from FileWriter import *
 
 imageTypes = ["png", "jpg", "bmp"]
 
+
+def flexBuild(directory):
+    base = directory.split('/')[len(directory.split('/'))-1] + ".as"
+    command = "compc -source-path %s -include-sources %s/%s -output '%s/%s.swc'" % (directory, directory, base, directory, base.split('.')[0])
+    os.system(command)
+    
+    
 def removeASFiles(directory):
     dirList = os.listdir(directory)
     
@@ -24,9 +31,7 @@ def removeASFiles(directory):
             
             if fileName[len(fileName) - 1] == "as":
                 os.remove(currentPath)
-                print ""
                 
-        
     
 def generateASBitmapFiles(directory, startPath):
     dirList = os.listdir(directory)
