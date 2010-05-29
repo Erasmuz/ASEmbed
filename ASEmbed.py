@@ -36,7 +36,7 @@ class LevelEditor:
         
     def buildXML(self):
         directory = tkFileDialog.askdirectory()
-        generateASXMLFiles(directory)
+        generateASXMLFiles(directory, directory)
         buildLinkerASFile(directory, directory)
         flexBuild(directory)
         removeASFiles(directory)

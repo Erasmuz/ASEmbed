@@ -57,7 +57,23 @@ import flash.display.DisplayObject;\n\
     
     outputAS = open(( directory + "/" + fileName[0] + ".as"), 'w')
     outputAS.write(output)
-  
+
+
+def createASXMLFile(directory, startPath, fileName):
+    output = "package "
+    output += getPackagePath(directory, startPath)
+    
+    output += " {\n\
+final public class %s {\n\
+    [Embed(source=\"%s.%s\", mimeType=\"application/octet-stream\")]\n\
+    private static const EmbeddedXML:Class;\n\
+    public static var %s:XML = XML(new EmbeddedXML());\n\
+    }\n}\n" % (fileName[0], fileName[0], fileName[len(fileName)-1], fileName[0])
+    
+    outputAS = open(( directory + "/" + fileName[0] + ".as"), 'w')
+    outputAS.write(output)
+        
+    
 def getPackagePath(directory, startPath):
     output = ""
     
@@ -74,9 +90,7 @@ def getPackagePath(directory, startPath):
     return output
     
     
-def createASXMLFile(directory, startPath, fileName):
-    print ""
-    
+
 def createContentsFile(htmlFileURL):
     htmlFile = open(htmlFileURL, 'w')
     htmlFile.write("<table border=\"2\">\n<tr><td><b>Object</b></td><td><b>Package Path</b></td></tr>\n")
