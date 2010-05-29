@@ -54,11 +54,18 @@ def buildLinkerASFile(directory, startDirectory):
     
     linkerFile.write("package {\n")
     
-    addASFilesToLinkerFile(directory, startDirectory, linkerFile)
+    addedObjects = addASFilesToLinkerFile(directory, startDirectory, linkerFile)
     
     linkerFile.write("import flash.display.Sprite;\n\npublic class %s extends Sprite {\n" % directory.split('/')[len(directory.split('/'))-1])
     
+    for imageObject in addedObjects:
+        linkerFile.write("\t%s;\n" % imageObject)
+        
+    linkerFile.write("}\n}\n")
+    
+    
 def addASFilesToLinkerFile(directory, startDirectory, linkerFile):
+    addedObjects = []
     dirList = os.listdir(directory)
     
     #Check each item in the current directory.
@@ -67,7 +74,7 @@ def addASFilesToLinkerFile(directory, startDirectory, linkerFile):
         
         #Directory: Recurse.
         if os.path.isdir(currentPath):
-            addASFilesToLinkerFile(currentPath, startDirectory, linkerFile)
+            addedObjects += addASFilesToLinkerFile(currentPath, startDirectory, linkerFile)
             
         #File: Check if it's an .as file.
         else:
@@ -76,12 +83,15 @@ def addASFilesToLinkerFile(directory, startDirectory, linkerFile):
             #Check here to make sure the file isn't the linker file. (Don't link it to itself!)
             if fileName[len(fileName) - 1] == "as":
                 #HERE COULD BE A PROBLEM IF A USER CREATES FILE WITH '.' IN THEM
-                addToImport(directory, startDirectory, fileName[0], linkerFile)
-                
+                addedObjects.append(addToImport(directory, startDirectory, fileName[0], linkerFile))
+     
+    return addedObjects
                 
 def addToImport(directory, startDirectory, item, linkerFile):
     packagePath = getPackagePath(directory, startDirectory)
     packagePath += "%s" % item if (packagePath == "") else ".%s" % item
     linkerFile.write("import %s\n" % packagePath)
+    
+    return item
 
 
