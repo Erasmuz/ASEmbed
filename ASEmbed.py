@@ -9,17 +9,14 @@ from ASBuilder import *
 
 class LevelEditor:
     def __init__(self, master):
-    	self.buttons = []
-    	self.entries = {}
-    	
     	self.windowFrame = Frame(root)
     	
     	self.buildWindow()
     	
     def buildWindow(self):
-        self.buttons.append(newButton(self.windowFrame, "?", self.buildBitmapData, 0,0))
-        self.buttons.append(newButton(self.windowFrame, "Create Spawn", self.buildSprite, 1,0))
-        self.buttons.append(newButton(self.windowFrame, "ReBuild", self.buildXML, 3,0))
+        newButton(self.windowFrame, "Build BitmapData", self.buildBitmapData, 0,0)
+        newButton(self.windowFrame, "Build Sprite", self.buildSprite, 1,0)
+        newButton(self.windowFrame, "Build XML", self.buildXML, 2,0)
         
         self.windowFrame.grid(row=0, column = 0)
     

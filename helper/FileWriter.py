@@ -47,10 +47,9 @@ def buildLinkerASFile(directory, startDirectory):
     linkerFile.write("package {\n")
     
     addASFiles(directory, linkerFile)
-    print linkerFile
     
     
-def addASFiles(directory, linkerFile)
+def addASFiles(directory, linkerFile):
     dirList = os.listdir(directory)
     
     #Check each item in the current directory.
