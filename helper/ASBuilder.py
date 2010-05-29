@@ -7,6 +7,27 @@ from FileWriter import *
 
 imageTypes = ["png", "jpg", "bmp"]
 
+def removeASFiles(directory):
+    dirList = os.listdir(directory)
+    
+    #Check each item in the current directory.
+    for item in dirList:
+        currentPath = (directory + "/" + item)
+    
+        #Directory: Recurse.
+        if os.path.isdir(currentPath):
+            removeASFiles(currentPath)
+        
+        #File: Check if it's an xml file.
+        else:
+            fileName = item.rsplit('.')
+            
+            if fileName[len(fileName) - 1] == "as":
+                #os.remove(currentPath)
+                print ""
+                
+        
+    
 def generateASBitmapFiles(directory, startPath):
     dirList = os.listdir(directory)
     
@@ -58,7 +79,7 @@ def generateASXMLFiles(directory, startPath):
         if os.path.isdir(currentPath):
             generateASXMLFiles(currentPath, startPath)
             
-        #File: Check if it's an image.
+        #File: Check if it's an xml file.
         else:
             fileName = item.rsplit('.')
             

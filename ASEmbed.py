@@ -24,16 +24,22 @@ class LevelEditor:
         directory = tkFileDialog.askdirectory()
         generateASBitmapFiles(directory, directory)
         buildLinkerASFile(directory, directory)
+        #Build
+        removeASFiles(directory)
         
     def buildSprite(self):
         directory = tkFileDialog.askdirectory()
         generateASSpriteFiles(directory, directory)
         buildLinkerASFile(directory, directory)
+        #Build
+        removeASFiles(directory)
         
     def buildXML(self):
         directory = tkFileDialog.askdirectory()
         generateASXMLFiles(directory)
         buildLinkerASFile(directory, directory)
+        #Build
+        removeASFiles(directory)
         
         
         
