@@ -23,7 +23,7 @@ def removeASFiles(directory):
             fileName = item.rsplit('.')
             
             if fileName[len(fileName) - 1] == "as":
-                #os.remove(currentPath)
+                os.remove(currentPath)
                 print ""
                 
         

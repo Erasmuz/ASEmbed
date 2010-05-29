@@ -48,13 +48,19 @@ def createASSpriteFile(directory, startPath, fileName):
 def createASXMLFile(directory, startPath, fileName):
     print ""
     
+def createContentsFile(htmlFileURL):
+    htmlFile = open(htmlFileURL, 'w')
+    htmlFile.write("<table border=\"2\">\n<tr><td><b>Object</b></td><td><b>Package Path</b></td></tr>\n")
+    return htmlFile
+
     
 def buildLinkerASFile(directory, startDirectory):
     linkerFile = open((directory + "/" + directory.split('/')[len(directory.split('/'))-1] + ".as"), 'w')
+    contentsFile = createContentsFile(directory + "/" + directory.split('/')[len(directory.split('/'))-1] + ".html")
     
     linkerFile.write("package {\n")
     
-    addedObjects = addASFilesToLinkerFile(directory, startDirectory, linkerFile)
+    addedObjects = addASFilesToLinkerFile(directory, startDirectory, linkerFile, contentsFile)
     
     linkerFile.write("import flash.display.Sprite;\n\npublic class %s extends Sprite {\n" % directory.split('/')[len(directory.split('/'))-1])
     
@@ -62,9 +68,10 @@ def buildLinkerASFile(directory, startDirectory):
         linkerFile.write("\t%s;\n" % imageObject)
         
     linkerFile.write("}\n}\n")
+    contentsFile.write("</table>")
     
     
-def addASFilesToLinkerFile(directory, startDirectory, linkerFile):
+def addASFilesToLinkerFile(directory, startDirectory, linkerFile, contentsFile):
     addedObjects = []
     dirList = os.listdir(directory)
     
@@ -74,7 +81,7 @@ def addASFilesToLinkerFile(directory, startDirectory, linkerFile):
         
         #Directory: Recurse.
         if os.path.isdir(currentPath):
-            addedObjects += addASFilesToLinkerFile(currentPath, startDirectory, linkerFile)
+            addedObjects += addASFilesToLinkerFile(currentPath, startDirectory, linkerFile, contentsFile)
             
         #File: Check if it's an .as file.
         else:
@@ -83,12 +90,13 @@ def addASFilesToLinkerFile(directory, startDirectory, linkerFile):
             #Check here to make sure the file isn't the linker file. (Don't link it to itself!)
             if fileName[len(fileName) - 1] == "as":
                 #HERE COULD BE A PROBLEM IF A USER CREATES FILE WITH '.' IN THEM
-                addedObjects.append(addToImport(directory, startDirectory, fileName[0], linkerFile))
+                addedObjects.append(addToImport(directory, startDirectory, fileName[0], linkerFile, contentsFile))
      
     return addedObjects
                 
-def addToImport(directory, startDirectory, item, linkerFile):
+def addToImport(directory, startDirectory, item, linkerFile, contentsFile):
     packagePath = getPackagePath(directory, startDirectory)
+    contentsFile.write("<tr><td>%s</td><td>%s</td></tr>\n" % (item, packagePath))
     packagePath += "%s" % item if (packagePath == "") else ".%s" % item
     linkerFile.write("import %s\n" % packagePath)
     
