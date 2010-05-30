@@ -44,6 +44,7 @@ class LevelEditor:
         
         
 root = Tk()
+root.title('ASEmbed')
 root.geometry("%dx%d%+d%+d" % (250, 150, 0, 0))
 
 app = LevelEditor(root)
