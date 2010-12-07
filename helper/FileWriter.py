@@ -6,6 +6,10 @@ import os
 
 imageTypes = ["png", "jpg", "bmp"]
 
+
+asFiles = []
+
+
 def createASBitmapFile(directory, startPath, fileName):
     output = "package "
     
@@ -22,7 +26,10 @@ public class %s extends BitmapData {\n\
 }\n\
 }" % (fileName[0], fileName[len(fileName)-1], fileName[0], fileName[0])
 
-    outputAS = open((directory + "/" + fileName[0] + ".as"), 'w')
+    fileName = (directory + "/" + fileName[0] + ".as")
+    
+    asFiles.append(fileName)
+    outputAS = open(fileName, 'w')
     outputAS.write(output)
     
     
@@ -55,7 +62,9 @@ import flash.display.DisplayObject;\n\
 	}\n\
 }" % (fileName[0], fileName[0], fileName[len(fileName)-1], fileName[0])
     
-    outputAS = open(( directory + "/" + fileName[0] + ".as"), 'w')
+    fileName = ( directory + "/" + fileName[0] + ".as")
+    asFiles.append(fileName)
+    outputAS = open(fileName, 'w')
     outputAS.write(output)
 
 
@@ -70,7 +79,11 @@ final public class %s {\n\
     public static var %s:XML = XML(new EmbeddedXML());\n\
     }\n}\n" % (fileName[0], fileName[0], fileName[len(fileName)-1], fileName[0])
     
-    outputAS = open(( directory + "/" + fileName[0] + ".as"), 'w')
+    fileName = ( directory + "/" + fileName[0] + ".as")
+    
+    asFiles.append(fileName)
+    
+    outputAS = open(fileName, 'w')
     outputAS.write(output)
         
     
@@ -98,7 +111,10 @@ def createContentsFile(htmlFileURL):
 
     
 def buildLinkerASFile(directory, startDirectory):
-    linkerFile = open((directory + "/" + directory.split('/')[len(directory.split('/'))-1] + ".as"), 'w')
+    linkerFileName = (directory + "/" + directory.split('/')[len(directory.split('/'))-1] + ".as")
+    asFiles.append(linkerFileName)
+    
+    linkerFile = open(linkerFileName, 'w')
     contentsFile = createContentsFile(directory + "/" + directory.split('/')[len(directory.split('/'))-1] + ".html")
     
     linkerFile.write("package {\n")

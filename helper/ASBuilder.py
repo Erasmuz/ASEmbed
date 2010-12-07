@@ -19,6 +19,7 @@ def buildLibrary(directory, compileType, buildType):
         
     buildLinkerASFile(directory, directory)
     flexBuild(directory)
+    
     removeASFiles(directory)
 
 
@@ -29,23 +30,14 @@ def flexBuild(directory):
     
     
 def removeASFiles(directory):
-    dirList = os.listdir(directory)
+    #Remove the file from the hard drive.
+    for item in asFiles:
+        os.remove(item)
     
-    #Check each item in the current directory.
-    for item in dirList:
-        currentPath = (directory + "/" + item)
+    #Remove the files from the stack
+    for item in asFiles:
+        asFiles.pop(0)
     
-        #Directory: Recurse.
-        if os.path.isdir(currentPath):
-            removeASFiles(currentPath)
-        
-        #File: Check if it's an xml file.
-        else:
-            fileName = item.rsplit('.')
-            
-            if fileName[len(fileName) - 1] == "as":
-                os.remove(currentPath)
-                
     
 def generateASBitmapFiles(directory, startPath):
     dirList = os.listdir(directory)
