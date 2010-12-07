@@ -8,6 +8,20 @@ from FileWriter import *
 imageTypes = ["png", "jpg", "bmp"]
 
 
+def buildLibrary(directory, compileType, buildType):
+    print buildType
+    if buildType == "Bitmaps":
+        generateASBitmapFiles(directory, directory)
+    elif buildType == "Sprites":
+        generateASSpriteFiles(directory, directory)
+    elif buildType == "XML":
+        generateASXMLFiles(directory, directory)
+        
+    buildLinkerASFile(directory, directory)
+    flexBuild(directory)
+    removeASFiles(directory)
+
+
 def flexBuild(directory):
     base = directory.split('/')[len(directory.split('/'))-1] + ".as"
     command = "compc -source-path %s -include-sources %s/%s -output '%s/%s.swc'" % (directory, directory, base, directory, base.split('.')[0])
