@@ -9,7 +9,6 @@ imageTypes = ["png", "jpg", "bmp"]
 
 
 def buildLibrary(directory, compileType, buildType):
-    print buildType
     if buildType == "Bitmaps":
         generateASBitmapFiles(directory, directory)
     elif buildType == "Sprites":
@@ -26,6 +25,7 @@ def buildLibrary(directory, compileType, buildType):
 def flexBuild(directory):
     base = directory.split('/')[len(directory.split('/'))-1] + ".as"
     command = "compc -source-path %s -include-sources %s/%s -output '%s/%s.swc'" % (directory, directory, base, directory, base.split('.')[0])
+    #command = "mxmlc -source-path %s -output '%s/%s.swf'" % (directory, directory, base.split('.')[0])
     os.system(command)
     
     

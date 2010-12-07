@@ -112,7 +112,7 @@ def createContentsFile(htmlFileURL):
     
 def buildLinkerASFile(directory, startDirectory):
     linkerFileName = (directory + "/" + directory.split('/')[len(directory.split('/'))-1] + ".as")
-    asFiles.append(linkerFileName)
+    
     
     linkerFile = open(linkerFileName, 'w')
     contentsFile = createContentsFile(directory + "/" + directory.split('/')[len(directory.split('/'))-1] + ".html")
@@ -120,6 +120,7 @@ def buildLinkerASFile(directory, startDirectory):
     linkerFile.write("package {\n")
     
     addedObjects = addASFilesToLinkerFile(directory, startDirectory, linkerFile, contentsFile)
+    print addedObjects
     
     linkerFile.write("import flash.display.Sprite;\n\npublic class %s extends Sprite {\n" % directory.split('/')[len(directory.split('/'))-1])
     
@@ -129,36 +130,27 @@ def buildLinkerASFile(directory, startDirectory):
     linkerFile.write("}\n}\n")
     contentsFile.write("</table>")
     
+    asFiles.append(linkerFileName)
+    
     
 def addASFilesToLinkerFile(directory, startDirectory, linkerFile, contentsFile):
     addedObjects = []
-    dirList = os.listdir(directory)
     
-    #Check each item in the current directory.
-    for item in dirList:
-        currentPath = (directory + "/" + item)
+    for item in asFiles:
+        fileItem = item.rsplit('/')
+        objectName = fileItem[len(fileItem)-1].rsplit('.')
+        addedObjects.append(objectName[0])
         
-        #Directory: Recurse.
-        if os.path.isdir(currentPath):
-            addedObjects += addASFilesToLinkerFile(currentPath, startDirectory, linkerFile, contentsFile)
-            
-        #File: Check if it's an .as file.
-        else:
-            fileName = item.rsplit('.')
-            
-            #Check here to make sure the file isn't the linker file. (Don't link it to itself!)
-            if fileName[len(fileName) - 1] == "as":
-                #HERE COULD BE A PROBLEM IF A USER CREATES FILE WITH '.' IN THEM
-                addedObjects.append(addToImport(directory, startDirectory, fileName[0], linkerFile, contentsFile))
-     
+        currentPath = item.rsplit('/', 1)
+        addToImport(currentPath[0], startDirectory, objectName[0], linkerFile, contentsFile)
+    
     return addedObjects
-                
+    
+    
 def addToImport(directory, startDirectory, item, linkerFile, contentsFile):
     packagePath = getPackagePath(directory, startDirectory)
     contentsFile.write("<tr><td>%s</td><td>%s</td></tr>\n" % (item, packagePath))
     packagePath += "%s" % item if (packagePath == "") else ".%s" % item
     linkerFile.write("import %s\n" % packagePath)
     
-    return item
-
 
