@@ -2,6 +2,7 @@ from Tkinter import *
 from urllib import urlopen, urlretrieve
 
 import tkFileDialog
+import tkMessageBox
 import os
 
 imageTypes = ["png", "jpg", "bmp"]
@@ -9,6 +10,9 @@ imageTypes = ["png", "jpg", "bmp"]
 
 asFiles = []
 
+def showError(title='Title', message='your message here.'):
+    tkMessageBox.showerror( title, message )
+    return
 
 def createASBitmapFile(directory, startPath, fileName):
     output = "package "

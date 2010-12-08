@@ -55,6 +55,7 @@ class LevelEditor:
         self.goFrame.pack()
         
     def go(self):
+        showError("ERROR!", "Theres an errer.")
         buildLibrary(self.directory, self.compileType, self.buildType.get())
         
         
