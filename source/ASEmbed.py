@@ -19,7 +19,8 @@ class LevelEditor:
     	self.goFrame = Frame(root)
     	
         #Create variables to store current selections.
-        self.compileType = "SWC"
+        self.compileType = StringVar()
+        self.compileType.set("SWC")
     	self.buildType = StringVar()
     	self.buildType.set("Sprites")
     	self.directory = "/"
@@ -30,13 +31,13 @@ class LevelEditor:
     	
     def buildWindow(self):
         #Still needs to do some sort of action. Need to set default
-        label = Label(self.compilerFrame, text="Compile To: ", relief=RAISED, width=15).grid(row=0)
+        label = Label(self.compilerFrame, text="Compile To: ", width=10, height=3).grid(row=0)
 
-        radBut1 = Radiobutton(self.compilerFrame, text="SWF", variable=self.compileType, value="SWF", width=4).grid(row=0, column=1)
-        radBut2 = Radiobutton(self.compilerFrame, text="SWC", variable=self.compileType, value="SWC", width=4).grid(row=0, column=2)
+        radBut1 = Radiobutton(self.compilerFrame, text="SWC", variable=self.compileType, value="SWC", width=4, relief=RAISED).grid(row=0, column=1)
+        radBut2 = Radiobutton(self.compilerFrame, text="SWF", variable=self.compileType, value="SWF", width=4, relief=RAISED).grid(row=0, column=2)
         
         #Create the menu of what type of libraries can be created.
-        label = Label(self.buildTypeFrame, text="Object Types: ", relief=RAISED, width=15).grid(row=0)
+        label = Label(self.buildTypeFrame, text="Object Types: ", width=10).grid(row=0)
         optionmenu = OptionMenu(self.buildTypeFrame, self.buildType, "Sprites", "Bitmaps", "XML", "Audio")
         optionmenu.grid(row=0, column=1)
         optionmenu["width"] = 10
@@ -65,7 +66,7 @@ class LevelEditor:
         
 root = Tk()
 root.title('ASEmbed')
-root.geometry("%dx%d%+d%+d" % (350, 175, 0, 0))
+root.geometry("%dx%d%+d%+d" % (350, 200, 0, 0))
 
 app = LevelEditor(root)
 root.mainloop()
