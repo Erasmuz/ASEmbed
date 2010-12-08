@@ -149,7 +149,11 @@ def addASFilesToLinkerFile(directory, startDirectory, linkerFile, contentsFile):
 def addToImport(directory, startDirectory, item, linkerFile, contentsFile):
     packagePath = getPackagePath(directory, startDirectory)
     contentsFile.write("<tr><td>%s</td><td>%s</td></tr>\n" % (item, packagePath))
-    packagePath += "%s" % item if (packagePath == "") else ".%s" % item
+    if (packagePath == ""):
+        packageOut = "%s" % item
+    else:
+        packageOut = ".%s" % item
+    packagePath += packageOut 
     linkerFile.write("import %s\n" % packagePath)
     
 
