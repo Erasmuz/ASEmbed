@@ -120,7 +120,6 @@ def buildLinkerASFile(directory, startDirectory):
     linkerFile.write("package {\n")
     
     addedObjects = addASFilesToLinkerFile(directory, startDirectory, linkerFile, contentsFile)
-    print addedObjects
     
     linkerFile.write("import flash.display.Sprite;\n\npublic class %s extends Sprite {\n" % directory.split('/')[len(directory.split('/'))-1])
     
