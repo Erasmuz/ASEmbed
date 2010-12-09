@@ -68,9 +68,19 @@ import flash.display.DisplayObject;\n\
     
     fileName = ( directory + "/" + fileName[0] + ".as")
     asFiles.append(fileName)
-    outputAS = open(fileName, 'w')
-    outputAS.write(output)
-
+    
+    try:
+        outputAS = open(fileName, 'w')
+    except:
+        showError("Open Error!", "Error creating .as file to embed object:\n%s" % fileName)
+        exit()
+        
+    try:
+        outputAS.write(output)
+    except:
+        showError("Write Error!", "Could not write to created .as file.")
+        exit()
+    
 
 def createASXMLFile(directory, startPath, fileName):
     output = "package "

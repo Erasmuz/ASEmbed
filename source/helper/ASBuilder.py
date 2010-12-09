@@ -4,6 +4,7 @@ from urllib import urlopen, urlretrieve
 import tkFileDialog
 import os
 from FileWriter import *
+import commands
 
 imageTypes = ["png", "jpg", "bmp"]
 
@@ -15,6 +16,7 @@ def buildLibrary(directory, compileType, buildType):
         generateASSpriteFiles(directory, directory)
     elif buildType == "XML":
         generateASXMLFiles(directory, directory)
+
         
     buildLinkerASFile(directory, directory)
     flexBuild(directory)
@@ -26,8 +28,13 @@ def flexBuild(directory):
     base = directory.split('/')[len(directory.split('/'))-1] + ".as"
     command = "compc -source-path %s -include-sources %s/%s -output '%s/%s.swc'" % (directory, directory, base, directory, base.split('.')[0])
     #command = "mxmlc -source-path %s -output '%s/%s.swf'" % (directory, directory, base.split('.')[0])
-    os.system(command)
     
+    returnCode, consoleOutput = commands.getstatusoutput(command)
+
+    if str(returnCode) == "32512":
+        showError("Compiler Error!", "MXMLC/COMPC not found.\nMake sure these are in your environment path.")
+    else:
+        os.system(command)
     
 def removeASFiles(directory):
     #Remove the file from the hard drive.
@@ -77,6 +84,7 @@ def generateASSpriteFiles(directory, startPath):
             if fileName[len(fileName) - 1] in imageTypes:
                 #Image: Build the AS file.
                 createASSpriteFile(directory, startPath, fileName)
+                
 
 
 def generateASXMLFiles(directory, startPath):

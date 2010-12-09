@@ -25,7 +25,7 @@ class LevelEditor:
     	self.buildType.set("Sprites")
     	self.directory = "/"
     	
-#Build the GUI
+        #Build the GUI
     	self.buildWindow()
     	
     	
@@ -33,8 +33,8 @@ class LevelEditor:
         #Still needs to do some sort of action. Need to set default
         label = Label(self.compilerFrame, text="Compile To: ", width=10, height=3).grid(row=0)
 
-        radBut1 = Radiobutton(self.compilerFrame, text="SWC", variable=self.compileType, value="SWC", width=4, relief=RAISED).grid(row=0, column=1)
-        radBut2 = Radiobutton(self.compilerFrame, text="SWF", variable=self.compileType, value="SWF", width=4, relief=RAISED).grid(row=0, column=2)
+        Radiobutton(self.compilerFrame, text="SWC", variable=self.compileType, value="SWC", width=4, relief=RAISED).grid(row=0, column=1)
+        Radiobutton(self.compilerFrame, text="SWF", variable=self.compileType, value="SWF", width=4, relief=RAISED).grid(row=0, column=2)
         
         #Create the menu of what type of libraries can be created.
         label = Label(self.buildTypeFrame, text="Object Types: ", width=10).grid(row=0)
@@ -42,10 +42,9 @@ class LevelEditor:
         optionmenu.grid(row=0, column=1)
         optionmenu["width"] = 10
 
-
         self.directoryBox = newEntry(self.directoryFrame, "[Directory]", 0, 0)
-        newButton(self.directoryFrame, "Choose Dir", self.getDirectory, 0,1)
         
+        newButton(self.directoryFrame, "Choose Dir", self.getDirectory, 0,1)
         newButton(self.goFrame, "GO!", self.go, 0,0)
         
         self.compilerFrame.pack()
@@ -55,10 +54,15 @@ class LevelEditor:
         self.goFrame.pack()
         
     def go(self):
-        showError("ERROR!", "Theres an errer.")
+        #Test the directory for existance
+        try:
+            os.listdir(self.directory)
+        except:
+            showError("Directory Error!", "Directory does not exist:\n%s" % self.directory)
+        
         buildLibrary(self.directory, self.compileType, self.buildType.get())
         
-        
+    
     def getDirectory(self):
         self.directory = tkFileDialog.askdirectory()
         self.directoryBox.delete(0, END)
