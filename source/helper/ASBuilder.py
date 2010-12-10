@@ -19,16 +19,24 @@ def buildLibrary(directory, compileType, buildType):
 
         
     buildLinkerASFile(directory, directory)
-    flexBuild(directory)
+    flexBuild(directory, compileType)
     
     removeASFiles(directory)
 
 
-def flexBuild(directory):
+def flexBuild(directory, compileType):
     base = directory.split('/')[len(directory.split('/'))-1] + ".as"
-    command = "compc -source-path %s -include-sources %s/%s -output '%s/%s.swc'" % (directory, directory, base, directory, base.split('.')[0])
-    #command = "mxmlc -source-path %s -output '%s/%s.swf'" % (directory, directory, base.split('.')[0])
+    mxBase = directory + "/" + base
+
+    print compileType
     
+    if (compileType == "SWC"):
+        command = "compc -source-path %s -include-sources %s/%s -output '%s/%s.swc'" % (directory, directory, base, directory, base.split('.')[0])
+    elif (compileType == "SWF"):
+        command = "mxmlc %s -output '%s/%s.swf'" % (mxBase, directory, base.split('.')[0])
+    else:
+        showError("Compiler Error!", "Error in compile type.")
+        
     returnCode, consoleOutput = commands.getstatusoutput(command)
 
     if str(returnCode) == "32512":

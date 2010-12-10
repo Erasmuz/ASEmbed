@@ -60,7 +60,7 @@ class LevelEditor:
         except:
             showError("Directory Error!", "Directory does not exist:\n%s" % self.directory)
         
-        buildLibrary(self.directory, self.compileType, self.buildType.get())
+        buildLibrary(self.directory, self.compileType.get(), self.buildType.get())
         
     
     def getDirectory(self):
