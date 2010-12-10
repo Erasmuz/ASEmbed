@@ -5,7 +5,7 @@ import tkFileDialog
 import tkMessageBox
 import os
 
-imageTypes = ["png", "jpg", "bmp"]
+imageTypes = ["png", "jpg", "gif"]
 
 
 asFiles = []

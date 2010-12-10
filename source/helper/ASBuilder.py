@@ -6,7 +6,7 @@ import os
 from FileWriter import *
 import commands
 
-imageTypes = ["png", "jpg", "bmp"]
+imageTypes = ["png", "jpg", "gif"]
 
 
 def buildLibrary(directory, compileType, buildType):
