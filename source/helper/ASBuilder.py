@@ -10,9 +10,9 @@ imageTypes = ["png", "jpg", "bmp"]
 
 
 def buildLibrary(directory, compileType, buildType):
-    if buildType == "Bitmaps":
+    if buildType == "BitmapData":
         generateASBitmapFiles(directory, directory)
-    elif buildType == "Sprites":
+    elif buildType == "Sprite":
         generateASSpriteFiles(directory, directory)
     elif buildType == "XML":
         generateASXMLFiles(directory, directory)

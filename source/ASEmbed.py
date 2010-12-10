@@ -22,7 +22,7 @@ class LevelEditor:
         self.compileType = StringVar()
         self.compileType.set("SWC")
     	self.buildType = StringVar()
-    	self.buildType.set("Sprites")
+    	self.buildType.set("Sprite")
     	self.directory = os.getcwd()
     	
         #Build the GUI
@@ -38,7 +38,7 @@ class LevelEditor:
         
         #Create the menu of what type of libraries can be created.
         label = Label(self.buildTypeFrame, text="Object Types: ", width=10).grid(row=0)
-        optionmenu = OptionMenu(self.buildTypeFrame, self.buildType, "Sprites", "Bitmaps", "XML", "Audio")
+        optionmenu = OptionMenu(self.buildTypeFrame, self.buildType, "Sprite", "BitmapData", "XML", "Audio")
         optionmenu.grid(row=0, column=1)
         optionmenu["width"] = 10
 
