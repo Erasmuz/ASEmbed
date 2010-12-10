@@ -23,7 +23,7 @@ class LevelEditor:
         self.compileType.set("SWC")
     	self.buildType = StringVar()
     	self.buildType.set("Sprites")
-    	self.directory = "/"
+    	self.directory = os.getcwd()
     	
         #Build the GUI
     	self.buildWindow()
@@ -42,7 +42,7 @@ class LevelEditor:
         optionmenu.grid(row=0, column=1)
         optionmenu["width"] = 10
 
-        self.directoryBox = newEntry(self.directoryFrame, "[Directory]", 0, 0)
+        self.directoryBox = newEntry(self.directoryFrame, self.directory, 0, 0)
         
         newButton(self.directoryFrame, "Choose Dir", self.getDirectory, 0,1)
         newButton(self.goFrame, "GO!", self.go, 0,0)
