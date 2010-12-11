@@ -27,10 +27,22 @@ class LevelEditor:
     	self.directory = os.getcwd()
     	self.mxmlcPath = ""
     	
-        #Build the GUI
+    	#Build the GUI
     	self.buildWindow()
     	
+    	self.loadConfigureFile()
     	
+    	
+    def loadConfigureFile(self):
+        try:
+            configFile = open("./ASConfig.conf", 'r')
+        except:
+            return
+            
+        lines = configFile.readlines()
+        self.mxmlcPath = lines[0].rsplit('=')[1].split('\n')[0]
+        configFile.close()
+        
     def buildWindow(self):
         #Add menu to the application
         self.filemenu = Menu(self.menubar, tearoff=0)
@@ -67,6 +79,16 @@ class LevelEditor:
     def setMXMLC(self):
         self.mxmlcPath = tkFileDialog.askdirectory()
         self.mxmlcPath += "/"
+        
+        try:
+            configFile = open("./ASConfig.conf", 'w')
+        except:
+            showError("Save Error!", "Could not save settings!\n%s" % self.directory)
+            return
+            
+        configFile.write("mxmlc=%s" % self.mxmlcPath)
+        configFile.close()
+        
         
     def go(self):
         #Test the directory for existance
