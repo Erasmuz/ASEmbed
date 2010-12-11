@@ -32,8 +32,12 @@ class LevelEditor:
     	
     def buildWindow(self):
         #Add menu to the application
-        self.menubar.add_command(label="Configure")
-        self.menubar.add_command(label="Exit", command=root.quit)
+        self.filemenu = Menu(self.menubar, tearoff=0)
+        self.filemenu.add_command(label="Configure")
+        self.filemenu.add_separator()
+        self.filemenu.add_command(label="Exit", command=root.quit)
+        self.menubar.add_cascade(label="File", menu=self.filemenu)
+
         root.config(menu=self.menubar)
         
         #Still needs to do some sort of action. Need to set default
