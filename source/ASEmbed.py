@@ -25,6 +25,7 @@ class LevelEditor:
     	self.buildType = StringVar()
     	self.buildType.set("Sprite")
     	self.directory = os.getcwd()
+    	self.mxmlcPath = ""
     	
         #Build the GUI
     	self.buildWindow()
@@ -33,7 +34,7 @@ class LevelEditor:
     def buildWindow(self):
         #Add menu to the application
         self.filemenu = Menu(self.menubar, tearoff=0)
-        self.filemenu.add_command(label="Configure")
+        self.filemenu.add_command(label="Set MXMLC", command=self.setMXMLC)
         self.filemenu.add_separator()
         self.filemenu.add_command(label="Exit", command=root.quit)
         self.menubar.add_cascade(label="File", menu=self.filemenu)
@@ -63,6 +64,10 @@ class LevelEditor:
         self.directoryFrame.pack(pady=20)
         self.goFrame.pack()
         
+    def setMXMLC(self):
+        self.mxmlcPath = tkFileDialog.askdirectory()
+        self.mxmlcPath += "/"
+        
     def go(self):
         #Test the directory for existance
         try:
@@ -70,7 +75,7 @@ class LevelEditor:
         except:
             showError("Directory Error!", "Directory does not exist:\n%s" % self.directory)
         
-        buildLibrary(self.directory, self.compileType.get(), self.buildType.get())
+        buildLibrary(self.directory, self.compileType.get(), self.buildType.get(), self.mxmlcPath)
         
     
     def getDirectory(self):

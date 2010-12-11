@@ -9,7 +9,7 @@ import commands
 imageTypes = ["png", "jpg", "gif"]
 
 
-def buildLibrary(directory, compileType, buildType):
+def buildLibrary(directory, compileType, buildType, mxmlcPath):
     if buildType == "BitmapData":
         generateASBitmapFiles(directory, directory)
     elif buildType == "Sprite":
@@ -19,19 +19,19 @@ def buildLibrary(directory, compileType, buildType):
 
         
     buildLinkerASFile(directory, directory)
-    flexBuild(directory, compileType)
+    flexBuild(directory, compileType, mxmlcPath)
     
     removeASFiles(directory)
     
 
-def flexBuild(directory, compileType):
+def flexBuild(directory, compileType, mxmlcPath):
     base = directory.split('/')[len(directory.split('/'))-1] + ".as"
     mxBase = directory + "/" + base
 
     if (compileType == "SWC"):
-        command = "compc -source-path %s -include-sources %s/%s -output '%s/%s.swc'" % (directory, directory, base, directory, base.split('.')[0])
+        command = "%scompc -source-path %s -include-sources %s/%s -output '%s/%s.swc'" % (mxmlcPath, directory, directory, base, directory, base.split('.')[0])
     elif (compileType == "SWF"):
-        command = "mxmlc %s -output '%s/%s.swf'" % (mxBase, directory, base.split('.')[0])
+        command = "%smxmlc %s -output '%s/%s.swf'" % (mxmlcPath, mxBase, directory, base.split('.')[0])
     else:
         showError("Compiler Error!", "Error in compile type.")
         
