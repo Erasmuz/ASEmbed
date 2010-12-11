@@ -11,7 +11,8 @@ class LevelEditor:
     def __init__(self, master):
         #Create the frame's for the different sections of the main window
     	self.tolalFrame = Frame(root)
-    	
+    	self.menubar = Menu(root)
+
         self.windowFrame = Frame(root)
     	self.compilerFrame = Frame(root)
     	self.buildTypeFrame = Frame(root)
@@ -30,6 +31,11 @@ class LevelEditor:
     	
     	
     def buildWindow(self):
+        #Add menu to the application
+        self.menubar.add_command(label="Configure")
+        self.menubar.add_command(label="Exit", command=root.quit)
+        root.config(menu=self.menubar)
+        
         #Still needs to do some sort of action. Need to set default
         label = Label(self.compilerFrame, text="Compile To: ", width=10, height=3).grid(row=0)
 
