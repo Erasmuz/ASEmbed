@@ -9,7 +9,7 @@ imageTypes = ["png", "jpg", "gif"]
 
 
 asFiles = []
-
+    
 def showError(title='Title', message='your message here.'):
     tkMessageBox.showerror( title, message )
     return

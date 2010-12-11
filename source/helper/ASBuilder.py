@@ -22,14 +22,12 @@ def buildLibrary(directory, compileType, buildType):
     flexBuild(directory, compileType)
     
     removeASFiles(directory)
-
+    
 
 def flexBuild(directory, compileType):
     base = directory.split('/')[len(directory.split('/'))-1] + ".as"
     mxBase = directory + "/" + base
 
-    print compileType
-    
     if (compileType == "SWC"):
         command = "compc -source-path %s -include-sources %s/%s -output '%s/%s.swc'" % (directory, directory, base, directory, base.split('.')[0])
     elif (compileType == "SWF"):
@@ -50,8 +48,8 @@ def removeASFiles(directory):
         os.remove(item)
     
     #Remove the files from the stack
-    for item in asFiles:
-        asFiles.pop(0)
+    for i in range(len(asFiles)):
+        asFiles.pop()
     
     
 def generateASBitmapFiles(directory, startPath):
