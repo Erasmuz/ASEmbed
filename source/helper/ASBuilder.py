@@ -6,7 +6,9 @@ import os
 from FileWriter import *
 import commands
 
-imageTypes = ["png", "jpg", "gif"]
+
+bitmapTypes = ["png", "jpg", "gif", "jpeg"]
+spriteTypes = ["png", "jpg", "gif", "jpeg", "svg"]
 
 
 def buildLibrary(directory, compileType, buildType, mxmlcPath):
@@ -22,6 +24,7 @@ def buildLibrary(directory, compileType, buildType, mxmlcPath):
     flexBuild(directory, compileType, mxmlcPath)
     
     removeASFiles(directory)
+    
     
 
 def flexBuild(directory, compileType, mxmlcPath):
@@ -42,6 +45,8 @@ def flexBuild(directory, compileType, mxmlcPath):
     else:
         os.system(command)
     
+    
+    
 def removeASFiles(directory):
     #Remove the file from the hard drive.
     for item in asFiles:
@@ -50,6 +55,7 @@ def removeASFiles(directory):
     #Remove the files from the stack
     for i in range(len(asFiles)):
         asFiles.pop()
+    
     
     
 def generateASBitmapFiles(directory, startPath):
@@ -67,11 +73,12 @@ def generateASBitmapFiles(directory, startPath):
         else:
             fileName = item.rsplit('.')
             
-            if fileName[len(fileName) - 1] in imageTypes:
+            if fileName[len(fileName) - 1] in bitmapTypes:
                 #Image: Build the AS file.
                 createASBitmapFile(directory, startPath, fileName)
             
-            
+        
+        
 def generateASSpriteFiles(directory, startPath):
     dirList = os.listdir(directory)
     
@@ -87,7 +94,7 @@ def generateASSpriteFiles(directory, startPath):
         else:
             fileName = item.rsplit('.')
             
-            if fileName[len(fileName) - 1] in imageTypes:
+            if fileName[len(fileName) - 1] in spriteTypes:
                 #Image: Build the AS file.
                 createASSpriteFile(directory, startPath, fileName)
                 
