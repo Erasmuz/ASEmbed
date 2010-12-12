@@ -5,10 +5,22 @@ import tkFileDialog
 import os
 from FileWriter import *
 import commands
+import re
 
 
 bitmapTypes = ["png", "jpg", "gif", "jpeg"]
 spriteTypes = ["png", "jpg", "gif", "jpeg", "svg"]
+
+validName = re.compile("(?:(?:[_]|[a-z]|[A-Z])+[0-9]*)")
+
+
+def checkName(name):
+    tokens = re.findall(validName, name)
+    if tokens[0] != name:
+        showError("Naming Error!", ("Name does not meet naming requirements:\n%s" % name))
+        return False
+    
+    return True
 
 
 def buildLibrary(directory, compileType, buildType, mxmlcPath):
@@ -74,8 +86,10 @@ def generateASBitmapFiles(directory, startPath):
             fileName = item.rsplit('.')
             
             if fileName[len(fileName) - 1] in bitmapTypes:
-                #Image: Build the AS file.
-                createASBitmapFile(directory, startPath, fileName)
+                if checkName(fileName[0]):
+                    #Image: Build the AS file.
+                
+                    createASBitmapFile(directory, startPath, fileName)
             
         
         
@@ -95,8 +109,9 @@ def generateASSpriteFiles(directory, startPath):
             fileName = item.rsplit('.')
             
             if fileName[len(fileName) - 1] in spriteTypes:
-                #Image: Build the AS file.
-                createASSpriteFile(directory, startPath, fileName)
+                if checkName(fileName[0]):
+                    #Image: Build the AS file.
+                    createASSpriteFile(directory, startPath, fileName)
                 
 
 
@@ -116,6 +131,8 @@ def generateASXMLFiles(directory, startPath):
             fileName = item.rsplit('.')
             
             if fileName[len(fileName) - 1] == "xml":
-                #Image: Build the AS file.
-                createASXMLFile(directory, startPath, fileName)
+                if checkName(fileName[0]):
+                
+                    #Image: Build the AS file.
+                    createASXMLFile(directory, startPath, fileName)
 
