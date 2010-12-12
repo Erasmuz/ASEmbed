@@ -23,9 +23,13 @@ validName = re.compile("(?:(?:[_]|[a-z]|[A-Z])+[0-9]*)")
 
 
 def buildLibrary(parentFrame, directory, compileType, buildType, mxmlcPath):
-    if ttkAvail:
-        ttk.Progressbar(parentFrame, orient=HORIZONTAL, length=200, mode='determinate').pack()
+    progBar = None
     
+    if ttkAvail:
+        progBar = ttk.Progressbar(parentFrame, orient=HORIZONTAL, value=0, length=200, mode='determinate')
+        progBar.pack()
+        parentFrame.update()
+        
     if buildType == "BitmapData":
         generateASBitmapFiles(directory, directory)
     elif buildType == "Sprite":
@@ -33,13 +37,27 @@ def buildLibrary(parentFrame, directory, compileType, buildType, mxmlcPath):
     elif buildType == "XML":
         generateASXMLFiles(directory, directory)
 
-        
+    if progBar != None:
+        progBar.step(15)
+        parentFrame.update()
+    
     buildLinkerASFile(directory, directory)
+    if progBar != None:
+        progBar.step(15)
+        parentFrame.update()
+    
     flexBuild(directory, compileType, mxmlcPath)
+    if progBar != None:
+        progBar.step(50)
+        parentFrame.update()
     
     removeASFiles(directory)
-
-
+    if progBar != None:
+        progBar.step(19)
+        parentFrame.update()
+        progBar.pack_forget()
+    
+    
     
 def checkName(name):
     tokens = re.findall(validName, name)

@@ -18,6 +18,10 @@ def showWarning(title='Title', message='your message here.'):
     tkMessageBox.showwarning( title, message )
     return
 
+def showInfo(title='Title', message='your message here.'):
+    tkMessageBox.showinfo( title, message )
+    return
+
 def createASBitmapFile(directory, startPath, fileName):
     output = "package "
     

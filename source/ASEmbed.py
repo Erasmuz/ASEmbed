@@ -102,6 +102,7 @@ class LevelEditor:
             showError("Directory Error!", "Directory does not exist:\n%s" % self.directory)
         
         buildLibrary(root, self.directory, self.compileType.get(), self.buildType.get(), self.mxmlcPath)
+        showInfo("Completed", "Build completed")
         
     
     def getDirectory(self):
