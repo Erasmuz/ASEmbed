@@ -7,6 +7,13 @@ from FileWriter import *
 import commands
 import re
 
+ttkAvail = True
+try:
+    import ttk
+except:
+    print "Warning: python version < 2.7, some features disabled.\n\t1 - Progress Bar."
+    ttkAvail = False
+
 
 bitmapTypes = ["png", "jpg", "gif", "jpeg"]
 spriteTypes = ["png", "jpg", "gif", "jpeg", "svg"]
@@ -14,16 +21,11 @@ spriteTypes = ["png", "jpg", "gif", "jpeg", "svg"]
 validName = re.compile("(?:(?:[_]|[a-z]|[A-Z])+[0-9]*)")
 
 
-def checkName(name):
-    tokens = re.findall(validName, name)
-    if tokens[0] != name:
-        showWarning("Naming Error!", ("Name does not meet naming requirements:\n%s" % name))
-        return False
+
+def buildLibrary(parentFrame, directory, compileType, buildType, mxmlcPath):
+    if ttkAvail:
+        ttk.Progressbar(parentFrame, orient=HORIZONTAL, length=200, mode='determinate').pack()
     
-    return True
-
-
-def buildLibrary(directory, compileType, buildType, mxmlcPath):
     if buildType == "BitmapData":
         generateASBitmapFiles(directory, directory)
     elif buildType == "Sprite":
@@ -36,8 +38,18 @@ def buildLibrary(directory, compileType, buildType, mxmlcPath):
     flexBuild(directory, compileType, mxmlcPath)
     
     removeASFiles(directory)
+
+
     
+def checkName(name):
+    tokens = re.findall(validName, name)
+    if tokens[0] != name:
+        showWarning("Naming Error!", ("Name does not meet naming requirements:\n%s" % name))
+        return False
     
+    return True
+
+
 
 def flexBuild(directory, compileType, mxmlcPath):
     base = directory.split('/')[len(directory.split('/'))-1] + ".as"

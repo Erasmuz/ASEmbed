@@ -7,6 +7,7 @@ from Tkinter import *
 from GUIHelper import *
 from ASBuilder import *
 
+
 class LevelEditor:
     def __init__(self, master):
         #Create the frame's for the different sections of the main window
@@ -44,6 +45,9 @@ class LevelEditor:
         configFile.close()
         
     def buildWindow(self):
+        #self.pDialog = Progressbar(root, orient=HORIZONTAL, length=200, mode='determinate')
+        
+        
         #Add menu to the application
         self.filemenu = Menu(self.menubar, tearoff=0)
         self.filemenu.add_command(label="Set MXMLC", command=self.setMXMLC)
@@ -97,7 +101,7 @@ class LevelEditor:
         except:
             showError("Directory Error!", "Directory does not exist:\n%s" % self.directory)
         
-        buildLibrary(self.directory, self.compileType.get(), self.buildType.get(), self.mxmlcPath)
+        buildLibrary(root, self.directory, self.compileType.get(), self.buildType.get(), self.mxmlcPath)
         
     
     def getDirectory(self):
