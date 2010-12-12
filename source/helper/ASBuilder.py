@@ -17,7 +17,7 @@ validName = re.compile("(?:(?:[_]|[a-z]|[A-Z])+[0-9]*)")
 def checkName(name):
     tokens = re.findall(validName, name)
     if tokens[0] != name:
-        showError("Naming Error!", ("Name does not meet naming requirements:\n%s" % name))
+        showWarning("Naming Error!", ("Name does not meet naming requirements:\n%s" % name))
         return False
     
     return True

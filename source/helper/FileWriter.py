@@ -13,6 +13,10 @@ asFiles = []
 def showError(title='Title', message='your message here.'):
     tkMessageBox.showerror( title, message )
     return
+    
+def showWarning(title='Title', message='your message here.'):
+    tkMessageBox.showwarning( title, message )
+    return
 
 def createASBitmapFile(directory, startPath, fileName):
     output = "package "
