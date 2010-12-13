@@ -4,8 +4,15 @@ from urllib import urlopen, urlretrieve
 import tkFileDialog
 import tkMessageBox
 import os
+import re
 
-imageTypes = ["png", "jpg", "gif"]
+bitmapTypes = ["png", "jpg", "gif", "jpeg"]
+spriteTypes = ["png", "jpg", "gif", "jpeg", "svg"]
+audioTypes = ["mp3"]
+allTypes = ["png", "jpg", "gif", "jpeg", "svg", "mp3"]
+xmlTypes = ["xml"]
+
+validName = re.compile("(?:(?:[_]|[a-z]|[A-Z])+[0-9]*)")
 
 
 asFiles = []
@@ -21,6 +28,7 @@ def showWarning(title='Title', message='your message here.'):
 def showInfo(title='Title', message='your message here.'):
     tkMessageBox.showinfo( title, message )
     return
+
 
 def createASBitmapFile(directory, startPath, fileName):
     output = "package "
@@ -43,9 +51,6 @@ public class %s extends BitmapData {\n\
     asFiles.append(fileName)
     outputAS = open(fileName, 'w')
     outputAS.write(output)
-    
-    
-    
     
     
 def createASAudioFile(directory, startPath, fileName):
@@ -82,10 +87,6 @@ def createASAudioFile(directory, startPath, fileName):
     except:
         showError("Write Error!", "Could not write to created .as file.")
         exit()
-    
-    
-    
-    
     
     
 def createASSpriteFile(directory, startPath, fileName):

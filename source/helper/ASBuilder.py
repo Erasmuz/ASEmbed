@@ -8,32 +8,59 @@ import commands
 import re
 
 
-bitmapTypes = ["png", "jpg", "gif", "jpeg"]
-spriteTypes = ["png", "jpg", "gif", "jpeg", "svg"]
-audioTypes = ["mp3"]
-allTypes = ["png", "jpg", "gif", "jpeg", "svg", "mp3"]
-
-validName = re.compile("(?:(?:[_]|[a-z]|[A-Z])+[0-9]*)")
-
-
 def buildLibrary(parentFrame, directory, compileType, buildType, mxmlcPath):
-    if buildType == "BitmapData":
-        generateASBitmapFiles(directory, directory)
-    elif buildType == "Sprite":
-        generateASSpriteFiles(directory, directory)
-    elif buildType == "XML":
-        generateASXMLFiles(directory, directory)
-    elif buildType == "Audio":
-        generateASAudioFiles(directory, directory)
-    elif buildType == "All":
-        generateAllFiles(directory, directory)
-
+    generateASFiles(directory, directory, buildType)
     buildLinkerASFile(directory, directory)
     flexBuild(directory, compileType, mxmlcPath)
     removeASFiles(directory)
     
     
+def generateASFiles(directory, startPath, buildType):
+    dirList = os.listdir(directory)
     
+    #Check each item in the current directory.
+    for item in dirList:
+        currentPath = (directory + "/" + item)
+        
+        #Directory: Recurse.
+        if os.path.isdir(currentPath):
+            generateASFiles(currentPath, startPath, buildType)
+            
+        #File: Check if it's an image.
+        else:
+            fileName = item.rsplit('.')
+            extension = fileName[len(fileName) - 1]
+            
+            #Chack the extension is a media type that can be embedded.
+            if buildType == "BitmapData" and extension in bitmapTypes:
+                if checkName(fileName[0]):
+                    createASBitmapFile(directory, startPath, fileName)
+                    
+            elif buildType == "Sprite" and extension in spriteTypes:
+                if checkName(fileName[0]):
+                    createASSpriteFile(directory, startPath, fileName)
+                
+            elif buildType == "Audio" and extension in audioTypes:
+                if checkName(fileName[0]):
+                    createASAudioFile(directory, startPath, fileName)
+                    
+            elif buildType == "XML":
+                if checkName(fileName[0]):
+                    createASXMLFile(directory, startPath, fileName)
+            
+            
+            elif buildType == "All" and extension in allTypes:
+                #Check that the name wont crash mxmlc
+                if checkName(fileName[0]):
+                    #Build the appropriate type depending on the extension of the file.
+                    if extension in spriteTypes:
+                        createASSpriteFile(directory, startPath, fileName)
+                    elif extension in audioTypes:
+                        createASAudioFile(directory, startPath, fileName)
+  
+  
+  
+  
 def checkName(name):
     tokens = re.findall(validName, name)
     if tokens[0] != name:
@@ -74,119 +101,4 @@ def removeASFiles(directory):
         asFiles.pop()
     
     
-def generateAllFiles(directory, startPath):
-    dirList = os.listdir(directory)
-    
-    #Check each item in the current directory.
-    for item in dirList:
-        currentPath = (directory + "/" + item)
-        
-        #Directory: Recurse.
-        if os.path.isdir(currentPath):
-            generateAllFiles(currentPath, startPath)
-            
-        #File: Check if it's an image.
-        else:
-            fileName = item.rsplit('.')
-            extension = fileName[len(fileName) - 1]
-            
-            #Chack the extension is a media type that can be embedded.
-            if extension in allTypes:
-                #Check that the name wont crash mxmlc
-                if checkName(fileName[0]):
-                    #Build the appropriate type depending on the extension of the file.
-                    if extension in spriteTypes:
-                        createASSpriteFile(directory, startPath, fileName)
-                    elif extension in audioTypes:
-                        createASAudioFile(directory, startPath, fileName)
-  
-  
-def generateASBitmapFiles(directory, startPath):
-    dirList = os.listdir(directory)
-    
-    #Check each item in the current directory.
-    for item in dirList:
-        currentPath = (directory + "/" + item)
-        
-        #Directory: Recurse.
-        if os.path.isdir(currentPath):
-            generateASBitmapFiles(currentPath, startPath)
-            
-        #File: Check if it's an image.
-        else:
-            fileName = item.rsplit('.')
-            
-            if fileName[len(fileName) - 1] in bitmapTypes:
-                if checkName(fileName[0]):
-                    #Image: Build the AS file.
-                
-                    createASBitmapFile(directory, startPath, fileName)
-            
-        
-        
-def generateASAudioFiles(directory, startPath):
-    dirList = os.listdir(directory)
-    
-    #Check each item in the current directory.
-    for item in dirList:
-        currentPath = (directory + "/" + item)
-        
-        #Directory: Recurse.
-        if os.path.isdir(currentPath):
-            generateASAudioFiles(currentPath, startPath)
-            
-        #File: Check if it's an image.
-        else:
-            fileName = item.rsplit('.')
-            
-            if fileName[len(fileName) - 1] in audioTypes:
-                if checkName(fileName[0]):
-                    #Image: Build the AS file.
-                
-                    createASAudioFile(directory, startPath, fileName)
-
-
-
-def generateASSpriteFiles(directory, startPath):
-    dirList = os.listdir(directory)
-    
-    #Check each item in the current directory.
-    for item in dirList:
-        currentPath = (directory + "/" + item)
-        
-        #Directory: Recurse.
-        if os.path.isdir(currentPath):
-            generateASSpriteFiles(currentPath, startPath)
-            
-        #File: Check if it's an image.
-        else:
-            fileName = item.rsplit('.')
-            
-            if fileName[len(fileName) - 1] in spriteTypes:
-                if checkName(fileName[0]):
-                    #Image: Build the AS file.
-                    createASSpriteFile(directory, startPath, fileName)
-                
-
-
-def generateASXMLFiles(directory, startPath):
-    dirList = os.listdir(directory)
-    
-    #Check each item in the current directory.
-    for item in dirList:
-        currentPath = (directory + "/" + item)
-        
-        #Directory: Recurse.
-        if os.path.isdir(currentPath):
-            generateASXMLFiles(currentPath, startPath)
-            
-        #File: Check if it's an xml file.
-        else:
-            fileName = item.rsplit('.')
-            
-            if fileName[len(fileName) - 1] == "xml":
-                if checkName(fileName[0]):
-                
-                    #Image: Build the AS file.
-                    createASXMLFile(directory, startPath, fileName)
 
