@@ -10,6 +10,8 @@ import re
 
 bitmapTypes = ["png", "jpg", "gif", "jpeg"]
 spriteTypes = ["png", "jpg", "gif", "jpeg", "svg"]
+audioTypes = ["mp3"]
+allTypes = ["png", "jpg", "gif", "jpeg", "svg", "mp3"]
 
 validName = re.compile("(?:(?:[_]|[a-z]|[A-Z])+[0-9]*)")
 
@@ -21,6 +23,10 @@ def buildLibrary(parentFrame, directory, compileType, buildType, mxmlcPath):
         generateASSpriteFiles(directory, directory)
     elif buildType == "XML":
         generateASXMLFiles(directory, directory)
+    elif buildType == "Audio":
+        generateASAudioFiles(directory, directory)
+    elif buildType == "ALL":
+        generateAllFiles(directory, directory)
 
     buildLinkerASFile(directory, directory)
     flexBuild(directory, compileType, mxmlcPath)
@@ -68,7 +74,33 @@ def removeASFiles(directory):
         asFiles.pop()
     
     
+def generateAllFiles(directory, startPath):
+    dirList = os.listdir(directory)
     
+    #Check each item in the current directory.
+    for item in dirList:
+        currentPath = (directory + "/" + item)
+        
+        #Directory: Recurse.
+        if os.path.isdir(currentPath):
+            generateAllFiles(currentPath, startPath)
+            
+        #File: Check if it's an image.
+        else:
+            fileName = item.rsplit('.')
+            extenstion = fileName[len(fileName) - 1]
+            
+            #Chack the extension is a media type that can be embedded.
+            if extenstion in allTypes:
+                #Check that the name wont crash mxmlc
+                if checkName(fileName[0]):
+                    #Build the appropriate type depending on the extension of the file.
+                    if extension in spriteTypes:
+                        createASSpriteFile(directory, startPath, fileName)
+                    elif extension in audioTypes:
+                        createASAudioFile(directory, startPath, fileName)
+  
+  
 def generateASBitmapFiles(directory, startPath):
     dirList = os.listdir(directory)
     
@@ -92,6 +124,29 @@ def generateASBitmapFiles(directory, startPath):
             
         
         
+def generateASAudioFiles(directory, startPath):
+    dirList = os.listdir(directory)
+    
+    #Check each item in the current directory.
+    for item in dirList:
+        currentPath = (directory + "/" + item)
+        
+        #Directory: Recurse.
+        if os.path.isdir(currentPath):
+            generateASAudioFiles(currentPath, startPath)
+            
+        #File: Check if it's an image.
+        else:
+            fileName = item.rsplit('.')
+            
+            if fileName[len(fileName) - 1] in audioTypes:
+                if checkName(fileName[0]):
+                    #Image: Build the AS file.
+                
+                    createASAudioFile(directory, startPath, fileName)
+
+
+
 def generateASSpriteFiles(directory, startPath):
     dirList = os.listdir(directory)
     

@@ -1,5 +1,6 @@
 from Tkinter import *
 from urllib import urlopen, urlretrieve
+import webbrowser  
 
 import os
 
@@ -14,3 +15,7 @@ def newEntry(parent, display, x, y):
     entry.insert(0, display) 
     return entry
  
+def displayHelp():
+    webbrowser.open("./ASHelp.html")
+    
+    

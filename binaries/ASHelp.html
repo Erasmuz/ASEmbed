@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>Help Page </title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<style>
+body { font:80% Verdana,Tahoma,Arial,sans-serif; }
+h1, h2, h3, h4 {  font-family: "Trebuchet MS",Georgia,"Times New Roman",serif; }
+ul.toc { padding: 4px; margin-left: 0; }
+ul.toc li { list-style-type:none; }
+ul.toc li.heading2 { margin-left: 1em; }
+ul.toc li.heading3 { margin-left: 2em; }
+a.wiki-anchor { display: none; margin-left: 6px; text-decoration: none; }
+a.wiki-anchor:hover { color: #aaa !important; text-decoration: none; }
+h1:hover a.wiki-anchor, h2:hover a.wiki-anchor, h3:hover a.wiki-anchor { display: inline; color: #ddd; }
+</style>
+</head>
+<body>
+<h1 id="ASEmbed-Help-Page">ASEmbed Help Page<a href="#ASEmbed-Help-Page" class="wiki-anchor">&para;</a></h1>
+
+
+	<h1 id="Configuring"><ins>Configuring</ins><a href="#Configuring" class="wiki-anchor">&para;</a></h1>
+
+
+Link software with mxmlc in 2 ways:
+	<ul>
+	<li>Add mxmlc to your system path</li>
+		<li>Click file->set mxmlc
+	<ul>
+	<li>Browse to and choose the folder containing mxmlc in the flex download.
+	<ul>
+	<li>Ex: Winodws: <pre>C:\flexSDK\bin</pre></li>
+		<li>Linux:<pre>/usr/flexSDK/bin</pre></li>
+	</ul></li>
+	</ul></li>
+	</ul>
+
+
+	<h1 id="Support"><ins>Support</ins><a href="#Support" class="wiki-anchor">&para;</a></h1>
+
+
+	<h2 id="Bitmaps">Bitmaps<a href="#Bitmaps" class="wiki-anchor">&para;</a></h2>
+
+
+	<ul>
+	<li>Supported Format Types:
+	<ul>
+	<li>PNG</li>
+		<li>GIF</li>
+		<li>JPG</li>
+		<li>JPEG</li>
+	</ul>
+	</li>
+		<li>Example:<br /><pre>
+package {
+
+import flash.display.MovieClip;
+import flash.display.Bitmap;
+import testgraphics.TestGraphic;
+
+public class Main extends MovieClip {
+    public function Main() {
+        //Create a new bitmap using the imported BitmapData and set is initial position
+        var image:Bitmap = new Bitmap(new TestGraphic(40, 40));
+        image.x = 400;
+        image.y = 300;
+
+        //Add the new Bitmap to the stage.
+        this.addChild(image);
+    }
+}
+}
+</pre></li>
+	</ul>
+
+
+	<h2 id="Audio">Audio<a href="#Audio" class="wiki-anchor">&para;</a></h2>
+
+
+	<ul>
+	<li>Supported Format Types:
+	<ul>
+	<li>None yet</li>
+	</ul>
+	</li>
+		<li>Example:<br /><pre><code>
+</code></pre></li>
+	</ul>
+
+
+	<h2 id="Sprites">Sprites<a href="#Sprites" class="wiki-anchor">&para;</a></h2>
+
+
+	<ul>
+	<li>Supported Format Types:
+	<ul>
+	<li>PNG</li>
+		<li>GIF</li>
+		<li>SVG</li>
+		<li>JPG</li>
+		<li>JPEG</li>
+	</ul>
+	</li>
+		<li>Example:<br /><pre>
+package {
+
+import flash.display.MovieClip;
+import testgraphics.TestGraphic;
+
+public class Main extends MovieClip {
+    public function Main() {
+        //Create a new instance of the imported graphic and set initial position.
+        var image:TestGraphic = new TestGraphic();
+        image.x = 400;
+        image.y = 300;
+
+        //Add the new image instance to the stage.
+        this.addChild(image);
+    }
+}
+}
+</pre></li>
+	</ul>
+
+
+	<h2 id="Fonts">Fonts<a href="#Fonts" class="wiki-anchor">&para;</a></h2>
+
+
+	<ul>
+	<li>Supported Format Types:
+	<ul>
+	<li>None yet</li>
+	</ul>
+	</li>
+		<li>Example:<br /><pre><code>
+</code></pre></li>
+	</ul>
+
+
+	<h2 id="XML">XML<a href="#XML" class="wiki-anchor">&para;</a></h2>
+
+
+	<ul>
+	<li>Supported Format Types:
+	<ul>
+	<li>XML</li>
+	</ul>
+	</li>
+		<li>Example:<br /><pre><code>
+</code></pre></li>
+	</ul>
+
+
+	<h1 id="Naming-Errors"><ins>Naming Errors</ins><a href="#Naming-Errors" class="wiki-anchor">&para;</a></h1>
+
+
+	<h2 id="Known-Issues-and-Why-Concerning-Naming">Known Issues and Why Concerning Naming:<a href="#Known-Issues-and-Why-Concerning-Naming" class="wiki-anchor">&para;</a></h2>
+
+
+	<table>
+		<tr>
+			<th style="text-align:left;" colspan="2">Files names to be embedded can not start with numbers </th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td> mxmlc assumes strings that start with digits are numbers, and causes it to crash.</td>
+		</tr>
+	</table>
+
+
+
+
+	<table>
+		<tr>
+			<th style="text-align:left;" colspan="2">File names to be embedded can not contain special symbols.</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td> Only letters, digits, and underscores are allowed </td>
+		</tr>
+		<tr>
+			<td>2</td>
+			<td> mxmlc treats these as math symbols, or other special symbols and crashes.</td>
+		</tr>
+	</table>
+
+
+
+
+	<table>
+		<tr>
+			<th style="text-align:left;" colspan="2">All file names must be unique.</th>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>Unique in the entire build.</td>
+		</tr>
+		<tr>
+			<td> </td>
+			<td> Files in sub-folders can't have the same name.</td>
+		</tr>
+		<tr>
+			<td>2</td>
+			<td>Not including the extension.</td>
+		</tr>
+		<tr>
+			<td> </td>
+			<td> Ex: test.png and test.jpg fail.</td>
+		</tr>
+		<tr>
+			<td>3</td>
+			<td>ASEmbed uses the file name minus the extension as the class name to embed the object, This will cause an ambigious class name for mxmlc at compile time if two objects end up with the same name in the same library.</td>
+		</tr>
+	</table>
+</body>
+</html>

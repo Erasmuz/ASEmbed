@@ -45,6 +45,49 @@ public class %s extends BitmapData {\n\
     outputAS.write(output)
     
     
+    
+    
+    
+def createASAudioFile(directory, startPath, fileName):
+    output = "package "
+    output += getPackagePath(directory, startPath)
+    
+    output += " {\n\
+	import flash.media.Sound;\n\
+\n\
+[Embed(source=\"%s.%s\")]\n\
+	final public class %s extends Sound\n\
+	{\n\
+\n\
+\n\
+		public function %s():void\n\
+		{\n\
+			super();\n\
+		}\n\
+\n\
+	}\n\
+}" % (fileName[0], fileName[len(fileName)-1], fileName[0], fileName[0])
+    
+    fileName = ( directory + "/" + fileName[0] + ".as")
+    asFiles.append(fileName)
+    
+    try:
+        outputAS = open(fileName, 'w')
+    except:
+        showError("Open Error!", "Error creating .as file to embed object:\n%s" % fileName)
+        exit()
+        
+    try:
+        outputAS.write(output)
+    except:
+        showError("Write Error!", "Could not write to created .as file.")
+        exit()
+    
+    
+    
+    
+    
+    
 def createASSpriteFile(directory, startPath, fileName):
     output = "package "
     output += getPackagePath(directory, startPath)

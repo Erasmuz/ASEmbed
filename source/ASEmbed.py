@@ -58,7 +58,7 @@ class LevelEditor:
         #Add help mune to the application
         self.helpmenu = Menu(self.menubar, tearoff=0)
         self.helpmenu.add_command(label="About", command=self.displayAbout)
-        self.helpmenu.add_command(label="Help", command=root.quit)
+        self.helpmenu.add_command(label="Help", command=displayHelp)
         self.menubar.add_cascade(label="Help", menu=self.helpmenu)
         
         root.config(menu=self.menubar)
