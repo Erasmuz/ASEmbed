@@ -72,7 +72,7 @@ class LevelEditor:
         self.directoryBox = newEntry(self.directoryFrame, self.directory, 0, 0)
         
         newButton(self.directoryFrame, "Choose Dir", self.getDirectory, 0,1)
-        newButton(self.goFrame, "GO!", self.go, 0,0)
+        self.goButton = newButton(self.goFrame, "GO!", self.go, 0,0)
         
         self.compilerFrame.pack()
         self.windowFrame.pack()
@@ -101,8 +101,13 @@ class LevelEditor:
         except:
             showError("Directory Error!", "Directory does not exist:\n%s" % self.directory)
         
+        self.goButton.configure(text="Building...", relief=SUNKEN)
+        self.goButton.update()
+        
         buildLibrary(root, self.directory, self.compileType.get(), self.buildType.get(), self.mxmlcPath)
         showInfo("Completed", "Build completed")
+        
+        self.goButton.configure(text="GO!", relief=RAISED)
         
     
     def getDirectory(self):

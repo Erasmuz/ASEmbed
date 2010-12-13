@@ -7,13 +7,6 @@ from FileWriter import *
 import commands
 import re
 
-ttkAvail = True
-try:
-    import ttk
-except:
-    print "Warning: python version < 2.7, some features disabled.\n\t1 - Progress Bar."
-    ttkAvail = False
-
 
 bitmapTypes = ["png", "jpg", "gif", "jpeg"]
 spriteTypes = ["png", "jpg", "gif", "jpeg", "svg"]
@@ -21,15 +14,7 @@ spriteTypes = ["png", "jpg", "gif", "jpeg", "svg"]
 validName = re.compile("(?:(?:[_]|[a-z]|[A-Z])+[0-9]*)")
 
 
-
 def buildLibrary(parentFrame, directory, compileType, buildType, mxmlcPath):
-    progBar = None
-    
-    if ttkAvail:
-        progBar = ttk.Progressbar(parentFrame, orient=HORIZONTAL, value=0, length=200, mode='determinate')
-        progBar.pack()
-        parentFrame.update()
-        
     if buildType == "BitmapData":
         generateASBitmapFiles(directory, directory)
     elif buildType == "Sprite":
@@ -37,25 +22,9 @@ def buildLibrary(parentFrame, directory, compileType, buildType, mxmlcPath):
     elif buildType == "XML":
         generateASXMLFiles(directory, directory)
 
-    if progBar != None:
-        progBar.step(15)
-        parentFrame.update()
-    
     buildLinkerASFile(directory, directory)
-    if progBar != None:
-        progBar.step(15)
-        parentFrame.update()
-    
     flexBuild(directory, compileType, mxmlcPath)
-    if progBar != None:
-        progBar.step(50)
-        parentFrame.update()
-    
     removeASFiles(directory)
-    if progBar != None:
-        progBar.step(19)
-        parentFrame.update()
-        progBar.pack_forget()
     
     
     
