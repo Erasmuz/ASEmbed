@@ -1,7 +1,6 @@
 from FileWriter import *
 import commands, re, os
 
-
 ############################################################################
 # Main process of building the library.  Generate, link, build, and clean-up
 ############################################################################
