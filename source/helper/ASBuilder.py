@@ -25,7 +25,7 @@ def buildLibrary(parentFrame, directory, compileType, buildType, mxmlcPath):
         generateASXMLFiles(directory, directory)
     elif buildType == "Audio":
         generateASAudioFiles(directory, directory)
-    elif buildType == "ALL":
+    elif buildType == "All":
         generateAllFiles(directory, directory)
 
     buildLinkerASFile(directory, directory)
@@ -88,10 +88,10 @@ def generateAllFiles(directory, startPath):
         #File: Check if it's an image.
         else:
             fileName = item.rsplit('.')
-            extenstion = fileName[len(fileName) - 1]
+            extension = fileName[len(fileName) - 1]
             
             #Chack the extension is a media type that can be embedded.
-            if extenstion in allTypes:
+            if extension in allTypes:
                 #Check that the name wont crash mxmlc
                 if checkName(fileName[0]):
                     #Build the appropriate type depending on the extension of the file.
