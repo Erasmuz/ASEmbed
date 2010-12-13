@@ -47,14 +47,20 @@ class LevelEditor:
     def buildWindow(self):
         #self.pDialog = Progressbar(root, orient=HORIZONTAL, length=200, mode='determinate')
         
-        
-        #Add menu to the application
+        #Need to create menu help function to the GuiHelper to clean this up.
+        #Add file menu to the application
         self.filemenu = Menu(self.menubar, tearoff=0)
         self.filemenu.add_command(label="Set MXMLC", command=self.setMXMLC)
         self.filemenu.add_separator()
         self.filemenu.add_command(label="Exit", command=root.quit)
         self.menubar.add_cascade(label="File", menu=self.filemenu)
 
+        #Add help mune to the application
+        self.helpmenu = Menu(self.menubar, tearoff=0)
+        self.helpmenu.add_command(label="About", command=self.displayAbout)
+        self.helpmenu.add_command(label="Help", command=root.quit)
+        self.menubar.add_cascade(label="Help", menu=self.helpmenu)
+        
         root.config(menu=self.menubar)
         
         #Still needs to do some sort of action. Need to set default
@@ -92,6 +98,22 @@ class LevelEditor:
             
         configFile.write("mxmlc=%s" % self.mxmlcPath)
         configFile.close()
+        
+    
+    def displayAbout(self):
+        #Create a new window with given dimensions.
+        aboutWindow = Toplevel()
+        aboutWindow.title("About ASEmbed:")
+        aboutWindow.geometry("150x150+50+50")
+        
+        #Add the about info.
+        msg = Message(aboutWindow, text="about_message")
+        msg.pack()
+
+        #Add a close button
+        button = Button(aboutWindow, text="Close", command=aboutWindow.destroy)
+        button.pack()
+        
         
         
     def go(self):
