@@ -1,7 +1,9 @@
 from Tkinter import *
 from urllib import urlopen, urlretrieve
-import webbrowser  
 
+import webbrowser  
+import tkFileDialog
+import tkMessageBox
 import os
 
 def newButton(parent, text, funcCall, x, y):
@@ -17,5 +19,17 @@ def newEntry(parent, display, x, y):
  
 def displayHelp():
     webbrowser.open("./ASHelp.html")
+        
+def showError(title='Title', message='your message here.'):
+    tkMessageBox.showerror( title, message )
+    return
+    
+def showWarning(title='Title', message='your message here.'):
+    tkMessageBox.showwarning( title, message )
+    return
+
+def showInfo(title='Title', message='your message here.'):
+    tkMessageBox.showinfo( title, message )
+    return
     
     

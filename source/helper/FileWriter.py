@@ -1,8 +1,6 @@
 from Tkinter import *
 from urllib import urlopen, urlretrieve
 
-import tkFileDialog
-import tkMessageBox
 import os
 import re
 
@@ -14,20 +12,7 @@ xmlTypes = ["xml"]
 
 validName = re.compile("(?:(?:[_]|[a-z]|[A-Z])+[0-9]*)")
 
-
 asFiles = []
-    
-def showError(title='Title', message='your message here.'):
-    tkMessageBox.showerror( title, message )
-    return
-    
-def showWarning(title='Title', message='your message here.'):
-    tkMessageBox.showwarning( title, message )
-    return
-
-def showInfo(title='Title', message='your message here.'):
-    tkMessageBox.showinfo( title, message )
-    return
 
 
 def createASBitmapFile(directory, startPath, fileName):
