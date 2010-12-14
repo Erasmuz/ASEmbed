@@ -69,6 +69,9 @@ def generateASFiles(directory, startPath, buildType):
                 
             elif checkFile(buildType, "Audio", extension, audioTypes, fileName):
                 createASAudioFile(directory, startPath, fileName)
+                
+            elif checkFile(buildType, "Font", extension, fontTypes, fileName):
+                createASFontFile(directory, startPath, fileName)
             
             elif checkFile(buildType, "XML", extension, xmlTypes, fileName):
                 createASXMLFile(directory, startPath, fileName)

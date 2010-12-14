@@ -71,7 +71,7 @@ class LevelEditor:
         
         #Create the menu of what type of libraries can be created.
         label = Label(self.buildTypeFrame, text="Object Types: ", width=10).grid(row=0)
-        optionmenu = OptionMenu(self.buildTypeFrame, self.buildType, "All", "Sprite", "BitmapData", "XML", "Audio")
+        optionmenu = OptionMenu(self.buildTypeFrame, self.buildType, "All", "Sprite", "BitmapData", "XML", "Font", "Audio")
         optionmenu.grid(row=0, column=1)
         optionmenu["width"] = 10
 

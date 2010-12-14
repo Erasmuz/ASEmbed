@@ -9,6 +9,7 @@ spriteTypes = ["png", "jpg", "gif", "jpeg", "svg"]
 audioTypes = ["mp3"]
 allTypes = ["png", "jpg", "gif", "jpeg", "svg", "mp3"]
 xmlTypes = ["xml"]
+fontTypes = ["ttf"]
 
 validName = re.compile("(?:(?:[_]|[a-z]|[A-Z])+[0-9]*)")
 
@@ -38,6 +39,43 @@ public class %s extends BitmapData {\n\
     outputAS.write(output)
     
     
+def createASFontFile(directory, startPath, fileName):
+    output = "package "
+    output += getPackagePath(directory, startPath)
+    
+    output += " {\n\
+	import flash.text.Font;\n\
+\n\
+[Embed(source=\"%s.%s\", fontName=\"%s\")]\n\
+	final public class %s extends Font\n\
+	{\n\
+\n\
+\n\
+		public function %s():void\n\
+		{\n\
+			super();\n\
+		}\n\
+\n\
+	}\n\
+}" % (fileName[0], fileName[len(fileName)-1], fileName[0], fileName[0], fileName[0])
+    
+    fileName = ( directory + "/" + fileName[0] + ".as")
+    asFiles.append(fileName)
+    
+    try:
+        outputAS = open(fileName, 'w')
+    except:
+        showError("Open Error!", "Error creating .as file to embed object:\n%s" % fileName)
+        exit()
+        
+    try:
+        outputAS.write(output)
+    except:
+        showError("Write Error!", "Could not write to created .as file.")
+        exit()
+    
+    
+
 def createASAudioFile(directory, startPath, fileName):
     output = "package "
     output += getPackagePath(directory, startPath)
@@ -72,6 +110,7 @@ def createASAudioFile(directory, startPath, fileName):
     except:
         showError("Write Error!", "Could not write to created .as file.")
         exit()
+    
     
     
 def createASSpriteFile(directory, startPath, fileName):
