@@ -87,9 +87,13 @@ class LevelEditor:
         self.goFrame.pack()
         
     def setMXMLC(self):
-        self.mxmlcPath = tkFileDialog.askdirectory()
-        self.mxmlcPath += "/"
-        
+        mxmlcPath = tkFileDialog.askdirectory()
+        if mxmlcPath:
+            self.mxmlcPath = mxmlcPath
+            self.mxmlcPath += "/"
+        else:
+            self.mxmlcPath = ""
+            
         try:
             configFile = open("./ASConfig.conf", 'w')
         except:

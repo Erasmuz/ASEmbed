@@ -7,7 +7,7 @@ import re
 bitmapTypes = ["png", "jpg", "gif", "jpeg"]
 spriteTypes = ["png", "jpg", "gif", "jpeg", "svg"]
 audioTypes = ["mp3"]
-allTypes = ["png", "jpg", "gif", "jpeg", "svg", "mp3", "ttf"]
+allTypes = ["png", "jpg", "gif", "jpeg", "svg", "mp3", "ttf", "xml"]
 xmlTypes = ["xml"]
 fontTypes = ["ttf"]
 

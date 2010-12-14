@@ -1,4 +1,5 @@
 from FileWriter import *
+from GUIHelper import *
 import commands, re, os
 
 ############################################################################
@@ -83,7 +84,8 @@ def generateASFiles(directory, startPath, buildType):
                     createASAudioFile(directory, startPath, fileName)
                 elif extension in fontTypes:
                     createASFontFile(directory, startPath, fileName)
-                
+                elif extension in xmlTypes:
+                    createASXMLFile(directory, startPath, fileName)
   
   
 #######################################################
