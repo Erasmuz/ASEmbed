@@ -81,6 +81,9 @@ def generateASFiles(directory, startPath, buildType):
                     createASSpriteFile(directory, startPath, fileName)
                 elif extension in audioTypes:
                     createASAudioFile(directory, startPath, fileName)
+                elif extension in fontTypes:
+                    createASFontFile(directory, startPath, fileName)
+                
   
   
 #######################################################

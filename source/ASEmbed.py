@@ -104,10 +104,10 @@ class LevelEditor:
         #Create a new window with given dimensions.
         aboutWindow = Toplevel()
         aboutWindow.title("About ASEmbed:")
-        aboutWindow.geometry("350x200+50+50")
+        aboutWindow.geometry("350x275+50+50")
         
         #Add the about info.
-        msg = Message(aboutWindow, width=325, text="ASEmbed written by:\nAaron Ryan\nhttp://aaron.homedns.org\n\nProject details:\nhttp://aaron.homedns.org/redmine/projects/asembed\
+        msg = Message(aboutWindow, width=325, text="ASEmbed:\n\nVersion: 0.1.2\nDate: Dec 14, 2010\n\nASEmbed written by:\n\nAaron Ryan: asembed@gmail.com\nhttp://aaron.homedns.org\n\nProject Details:\nhttp://aaron.homedns.org/redmine/projects/asembed\
 \n\n\nExecutables built using pyinstaller.\n")
         msg.pack()
 
